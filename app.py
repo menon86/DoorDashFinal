@@ -4,6 +4,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import os
 
 st.set_page_config(
     page_title="DoorDash Delivery Delay Analytics",
@@ -50,7 +51,8 @@ st.markdown("""
 # ── Data Loading & Preprocessing ────────────────────────────────────────────
 @st.cache_data(show_spinner="Loading and preparing data…")
 def load_data():
-    df = pd.read_csv("/app/doordash.csv")
+    DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "doordash.csv")
+    df = pd.read_csv(DATA_PATH)
     df["created_at"] = pd.to_datetime(df["created_at"])
     df["actual_delivery_time"] = pd.to_datetime(df["actual_delivery_time"])
     df["actual_duration_min"] = (
